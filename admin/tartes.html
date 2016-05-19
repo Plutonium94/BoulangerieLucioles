@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Admin : Tartes - Boulangérie des Lucioles</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+	
+	<div class="container" ng-app="adminTartesApp" ng-controller="adminTartesController">
+
+		<header class="page-header">
+			<h1>Admin - Tartes</h1>
+			<p>Ici vous pouvez, rajouter, modifier et supprimer des tartes</p>
+
+		</header>
+
+		<div ng-include src="nav"></div>
+
+
+		<br>
+
+		<form name="newTarteForm" class="form-inline">
+			<h3> Rajouter nouvelle tarte</h3>
+
+			<div class="form-group">
+				<label for="newTarteNom">Nom de la nouvelle tarte </label>
+				<input type="text" name="newTarteNom" ng-model="newTarteNom" id="newTarteNom" class="form-control" required>
+			</div>
+
+			<div class="form-group">
+				<label for="newTartePrix">Prix de la nouvelle tarte </label>
+				<input type="number" name="newTartePrix" id="newTartePrix" ng-model="newTartePrix" class="form-control" step="0.01" required>
+			</div>
+
+			<button class="btn btn-success" ng-click="addNewTarte()">Ajouter</button>
+		</form>
+
+		<br>
+		<br>
+
+		<div id="tartes" ng-repeat="t in tartes">
+			<div class="panel panel-default">
+				<div class="panel-body">{{t.nom}} {{t.prix}}</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var adminTartesApp = angular.module("adminTartesApp",[]);
+
+		adminTartesApp.controller("adminTartesController", function($http,$scope) {
+			$scope.nav = 'nav.htm';
+			$scope.tartes = [];
+
+			$scope.addNewTarte = function() {
+				var nom = $scope.newTarteNom;
+				var prix = $scope.newTartePrix;
+
+				if(nom.length > 0) {
+					$http.put("/admin/ajax/tartes/nouveau", {"nom": nom,"prix": prix}).success(function(response) {
+						$scope.tartes.push(response);
+					});
+				}
+			};
+
+			$http.get("/admin/ajax/tartes").success(function(response) {
+				console.log(response);
+				if(Array.isArray(response)) {
+					$scope.tartes = response;
+				}
+			});
+		});
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+

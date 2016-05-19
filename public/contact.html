@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Contact - Boulangérie de Lucioles</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="contactApp" ng-controller="contactController">
+
+	<div class="w3-container" >
+		<div ng-include src="nav" class="w3-black"></div>
+
+		<header class="w3-container w3-green">
+			<h1>Contact</h1>
+		</header>
+
+		<section class="w3-container">
+
+			<p id="addresse" >
+				Boulangérie des Lucioles<br>
+				1001 Route des Lucioles<br>
+				06902 Sophia Antipolis<br>
+				France
+			</p>
+
+			<p id="tel">09.12.34.43.77</p>
+
+		</section>
+
+		<footer ng-include src="'disclaimer.htm'" class="w3-green w3-container">
+
+		</footer>
+
+	</div>
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var contactApp = angular.module("contactApp",[]);
+
+		contactApp.controller("contactController", function($scope) {
+			$scope.nav = 'nav.htm';
+		});
+
+	</script>
+	<script src="navSelected.js"></script>
+
+</body>
+</html>

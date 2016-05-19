@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Admin Gâteaux</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+
+<div class="container" ng-app="adminGateauxApp" ng-controller="adminGateuaxController">
+
+	<header class="page-header">
+		<h1>Admin - Gâteaux</h1>
+		<p>Ici vous pouvez, rajouter, modifier et supprimer des gâteaux</p>
+	</header>
+
+	<div ng-include src="nav"></div>
+
+	<form class="form-inline" name="nouveauGateauForm">
+		<h3>Rajouter nouveau gâteau</h3>
+
+		<div class="form-group">
+			<label for="nouveauGateauNom">Nom de gâteau </label>&nbsp;
+			<input type="text" class="form-control" name="nouveauGateauNom" ng-model="nouveauGateauNom" placeholder="Ex : Forêt Noire" required>
+		</div>
+		<button class="btn btn-success" ng-click="addNewGateau()">Ajouter</button>
+	</form>
+
+	<br>
+	<br>
+	<div id="gateaux" ng-repeat="g in gateaux">
+		<div class="panel panel-default">
+			<div class="panel-body">{{g.name}}</body>
+		</div>
+	</div>
+
+</div>
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+	<script src="angular.min.js"></script>
+	<script>
+		
+		var adminGateauxApp = angular.module("adminGateauxApp",[]);
+
+
+		adminGateauxApp.controller("adminGateuaxController", function($http, $scope) {
+
+			$scope.nav = 'nav.htm';
+
+			$scope.gateaux = [];
+			$scope.addNewGateau = function() {
+				console.log("inside listener")
+				console.log($scope.nouveauGateauNom);
+				if($scope.nouveauGateauNom.length > 0) {
+					console.log("inside dirty");
+					$http.put("/admin/ajax/gateaux/nouveau", {"nom" : $scope.nouveauGateauNom}).success(function(response) {
+						$scope.gateaux.push(response);
+						$scope.nouveauGateauNom = "";
+					});			
+				}
+			};
+
+			$http.get("/admin/ajax/gateaux").success(function( response) {
+				console.log(response);
+				$scope.gateaux = response;
+			});
+		});		
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Admin : Boissons - Boulangérie des Lucioles</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+	
+	<div class="container" ng-app="adminBoissonsApp" ng-controller="adminBoissonsController">
+
+		<header class="page-header">
+			<h1>Admin - Boisson</h1>
+			<p>Ici vous pouvez, rajouter, modifier et supprimer des gâteaux</p>
+
+		</header>
+
+		<div ng-include src="nav"></div>
+
+		<br>
+
+		<form name="newBoissonForm" class="form-inline">
+			<h3> Rajouter nouveau boisson</h3>
+
+			<div class="form-group">
+				<label for="newBoissonNom">Nom </label>
+				<input type="text" name="newBoissonNom" ng-model="newBoissonNom" id="newBoissonNom" class="form-control" required>
+			</div>
+
+			<div class="form-group">
+				<label for="newBoissonPrix">Prix</label>
+				<input type="number" name="newBoissonPrix" id="newBoissonPrix" ng-model="newBoissonPrix" class="form-control" step="0.01" required>
+			</div>
+
+			<div class="form-group">
+				<label for="newBoissonCategorie">Categorie </label>
+				<select id="newBoissonCategorie" name="newBoissonCategorie" ng-model="newBoissonCategorie" class="form-control" ng-options="c for c in categories">
+					<option value="{{c}}">{{c}}</option>
+				</select>
+			</div>
+
+
+			<button class="btn btn-success" ng-click="addNewBoisson()">Ajouter</button>
+		</form>
+
+		<br>
+		<br>
+
+		<div id="boissons" ng-repeat="b in boissons">
+			<div class="panel panel-default">
+				<div class="panel-body">{{b.nom}} {{b.prix}} {{b.categorie}}</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var adminBoissonsApp = angular.module("adminBoissonsApp",[]);
+
+		adminBoissonsApp.controller("adminBoissonsController", function($http,$scope) {
+			$scope.nav = 'nav.htm';
+			$scope.boissons = [];
+			$scope.categories = ["sodas","boissons chaudes", "jus"];
+
+			$scope.addNewBoisson = function() {
+				var nom = $scope.newBoissonNom;
+				var prix = $scope.newBoissonPrix;
+				var categorie = $scope.newBoissonCategorie;
+
+				if(nom.length > 0) {
+					$http.put("/admin/ajax/boissons/nouveau", {"nom": nom,"prix": prix, "categorie": categorie}).success(function(response) {
+						$scope.boissons.push(response);
+					});
+				}
+			};
+
+			$http.get("/admin/ajax/boissons").success(function(response) {
+				console.log(response);
+				if(Array.isArray(response)) {
+					$scope.boissons = response;
+				}
+			});
+		});
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Forumules - Boulangérie de Lucioles</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="formulesApp" ng-controller="formulesController">
+
+	<div ng-include src="nav" class="w3-black"></div>
+
+	<header class="w3-container">
+		<h1>Les Formules</h1>
+		<em>Achetez plus ! Payez moins ! </em>
+	</header>
+
+	<br>
+	<br>
+
+	<section class="w3-container w3-row">
+		<div class="w3-card w3-third w3-light-green">
+			<h4 class="w3-center">Soif</h4>
+			<p class="w3-center">3 Sodas ou Jus : -20%</p>
+		</div>
+
+		<div class="w3-card w3-third w3-light-green">
+			<h4 class="w3-center">Petit Déjeuner</h4>
+			<p class="w3-center">1 Tarte + 1 Boisson Chaude : 3€</p>
+		</div>
+
+		<div class="w3-card w3-third w3-light-green">
+			<h4 class="w3-center">Sweet Tooth</h4>
+			<p class="w3-center">5 Gâteaux : -30%</p>
+		</div>
+
+	</section>
+	<br>
+
+	<footer class="w3-container w3-teal" ng-include src="'disclaimer.htm'" >
+		<!-- <p>Se site a été fabriqué par quelqu'un</p> -->
+	</footer>
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var formulesApp = angular.module("formulesApp",[]);
+
+		formulesApp.controller("formulesController", function($scope) {
+			$scope.nav = 'nav.htm';
+		});
+
+	</script>
+	<script src="navSelected.js"></script>
+
+
+</body>
+</html>

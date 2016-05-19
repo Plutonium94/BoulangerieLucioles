@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Boissons - Boulangérie des Lucioles</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="boissonsApp" ng-controller="boissonsController">
+	
+
+	<div class="w3-container">
+		<div ng-include src="'nav.htm'" class="w3-container w3-black"></div>
+
+
+		<header class="w3-container w3-green">
+			<h1>Boissons</h1>
+			<p>Pour vous rendre frais</p>
+
+		</header>
+
+
+		<br>
+		<section id="boissons" class="w3-container">
+			<article ng-repeat="(cat, bs) in boissons">
+				<ul class="w3-ul w3-border">
+					<li><h4>{{cat}}</h4></li>
+					<li ng-repeat="b in bs">{{b.nom}} {{b.prix}}</li>
+				</ul>
+				<br>
+			</article>
+		</section>
+
+		<footer ng-include="'disclaimer.htm'" class="w3-green w3-container">
+
+		</footer>
+	</div>
+
+
+
+	<script src="angular.min.js"></script>
+	<script>
+
+
+		var boissonsApp = angular.module("boissonsApp",[]);
+
+		boissonsApp.controller("boissonsController", function($http,$scope) {
+			$scope.boissons = [];
+			
+
+			$http.get("/admin/ajax/boissons").success(function(response) {
+				console.log(response);
+				if(Array.isArray(response)) {
+					var boissons = {"Boissons Chaudes": [], "Sodas": [], "Jus": []};
+					for(cat in boissons) {
+						boissons[cat] = response.filter(function(elt) {
+							return elt.categorie.toLowerCase() == cat.toLowerCase();
+						});
+					}
+					$scope.boissons = boissons;
+				}
+			});
+		});
+
+	</script>
+	<script src="navSelected.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+

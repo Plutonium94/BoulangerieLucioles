@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Boulangerie de Lucioles</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="indexApp" ng-controller="indexController">
+
+	<div class="w3-container">
+
+		<div ng-include src="'nav.htm'" class="w3-container w3-black"></div>
+
+
+		<header class="w3-container w3-deep-purple">
+			<h1>Bienvenue à Boulangerie de Lucioles</h1>
+			<em>Mangez au contentement de votre coeur</em>
+		</header>
+
+
+		<section class=" w3-row ">
+			<article class=" w3-quarter  w3-card ">
+				<h4 class="w3-center"><a href="carte.html">Carte</a></h4>
+				<p class="w3-center">Retrouvez tous nos produits</p>
+			</article>
+
+			<article class="w3-quarter w3-card ">
+				<h4 class="w3-center"><a href="formules.html">Formules</a></h4>
+				<p class="w3-center">Achetez plus ! Payez moins ! </p>
+			</article>
+
+			<article class="w3-quarter w3-card ">
+				<h4 class="w3-center"><a href="contact.html">Contact</a></h4>
+				<p class="w3-center">Nous-réjoindre</p>
+			</article>
+
+			<article class="w3-quarter w3-card">
+				<h4 class="w3-center"><a href="/admin/gateaux">Admin</a></h4>
+				<p class="w3-center">Le boulanger, c'est vous !</p>
+			</article>
+
+		</section>
+
+		<footer class="w3-container w3-deep-purple" ng-include="'disclaimer.htm'">
+			<!--<p>Se site a été fabriqué par quelqu'un</p>-->
+		</footer>
+
+	</div>
+
+	<script src="angular.min.js"></script>
+	<script>
+		var indexApp = angular.module("indexApp",[]);
+
+		indexApp.controller("indexController", function($scope) {
+			$scope.nav = 'nav.htm';
+		});
+	</script>
+	<script src="navSelected.js"></script>
+
+
+</body>
+</html>

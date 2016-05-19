@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Gâteaux</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="gateauxApp" ng-controller="gateauxController">
+
+	<div class="w3-container">
+		<div ng-include src="nav" class="w3-container w3-black"></div>
+
+		<header class="w3-container">
+			<h1>Gâteaux</h1>
+		</header>
+
+		<section class="w3-container">
+			<ul ng-show="estTableau">
+				<li ng-repeat="g in gateaux" >{{g.name}}</li>
+			</ul>
+
+			<p ng-show="!estTableau">{{gateaux}}</p>
+
+
+
+		</section>
+
+		<footer ng-include="'disclaimer.htm'" class="w3-green w3-container">
+
+		</footer>
+
+	</div>
+
+
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var gateauxApp = angular.module("gateauxApp", []);
+
+		gateauxApp.controller("gateauxController", function($http, $scope) {
+			$scope.nav = "nav.htm";
+			$http.get("/ajax/gateaux").success(function(response) {
+				$scope.gateaux = response;
+				$scope.estTableau = Array.isArray(response);
+			});
+		});
+	</script>
+	<script src="navSelected.js"></script>
+
+</body>
+</html>

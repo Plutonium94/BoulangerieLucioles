@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Carte - Boulangérie de Lucioles</title>
+	<link rel="stylesheet" href="w3.css">
+</head>
+<body ng-app="carteApp" ng-controller="carteController">
+
+	<div ng-include src="nav" class="w3-black"></div>
+
+	<header class="w3-container">
+		<h1>Notre Carte</h1>
+		<em>Retrouvez toutes nos produits</em>
+	</header>
+
+	<section class="w3-container w3-row">
+		<div class="w3-card w3-third w3-pink">
+			<h4 class="w3-center"><a href="cakes.html">Gâteaux</a></h4>
+		</div>
+
+		<div class="w3-card w3-third w3-pink">
+			<h4 class="w3-center"><a  href="tartes.html">Tartes</a></h4>
+		</div>
+
+		<div class="w3-card w3-third w3-pink">
+			<h4 class="w3-center"><a href="boissons.html">Boissons</a></h4>
+		</div>
+
+	</section>
+	<br>
+
+	<footer class="w3-container w3-indigo" ng-include src="'disclaimer.htm'" >
+		<!-- <p>Se site a été fabriqué par quelqu'un</p> -->
+	</footer>
+
+	<script src="angular.min.js"></script>
+	<script>
+
+		var carteApp = angular.module("carteApp",[]);
+
+		carteApp.controller("carteController", function($scope) {
+			$scope.nav = 'nav.htm';
+		});
+
+	</script>
+	<script src="navSelected.js"></script>
+
+
+</body>
+</html>
